@@ -20,19 +20,6 @@ async function main(params) {
     }
 }
 
-async function findWord2(driver, word) {
-    await driver.get('https://www.es-anlam.com/kelime/' + word);
-    const result_section = await driver.findElement(By.id('esanlamlar'));
-    const kelime = await result_section.findElement(By.css('i')).getText();
-    const es_anlamli = await result_section.findElement(By.css('strong')).getText();
-    kelime_sayisi++;
-    console.log(kelime, es_anlamli);
-    if (kelime_sayisi < kelime_limit) {
-        const next_word = await driver.findElement(By.className('pull-right')).getText();
-        await findWord(driver, next_word.slice(0, -3));
-    }
-}
-
 async function findWord(word) {
     const response = await axios.get('https://www.es-anlam.com/kelime/' + word.trim());
     const root = parse(response.data);
