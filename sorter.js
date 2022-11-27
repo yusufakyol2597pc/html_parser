@@ -12,6 +12,8 @@ fs.readFile(fileName, 'utf8', (err, data) => {
   }
   let words = data.split("\n");
   words = words.filter(word => !format.test(word))
+  words = words.filter(word => !word.includes(" "))
+  words = words.map(word => word.toLocaleLowerCase());
   words = words.filter(onlyUnique)
   words = words.map(word => word.replace(",,", ","));
   words.sort(function(a, b){
@@ -20,7 +22,7 @@ fs.readFile(fileName, 'utf8', (err, data) => {
     return a.length - b.length;
   });
 
-  let writeSynonymStream = fs.createWriteStream('./' + fileName);
+  let writeSynonymStream = fs.createWriteStream('./sorted_' + fileName);
   words.forEach(word => {
     writeSynonymStream.write(word + '\n', () => {
     })
