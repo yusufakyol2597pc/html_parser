@@ -12,6 +12,8 @@ fs.readFile(fileName, 'utf8', (err, data) => {
   }
   let words = data.split("\n");
   words = words.filter(word => !format.test(word))
+  words = words.filter(onlyUnique)
+  words = words.map(word => word.replace(",,", ","));
   words.sort(function(a, b){
     // ASC  -> a.length - b.length
     // DESC -> b.length - a.length
@@ -24,3 +26,7 @@ fs.readFile(fileName, 'utf8', (err, data) => {
     })
   })
 });
+
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+}

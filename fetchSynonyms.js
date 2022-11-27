@@ -46,7 +46,3 @@ async function findWord(word) {
         writeSynonymStream.end();
     }
 }
-
-function writeToCsvFile() {
-    
-}
